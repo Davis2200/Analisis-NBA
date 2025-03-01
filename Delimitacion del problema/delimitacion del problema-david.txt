@@ -1,0 +1,12 @@
+buscamos crear un codigo el cual sea capaz de realizar un analisis preditivo
+sobre futuro partidos de la nba, el objetivo es acertar que equipo sera el ganador
+del partido y cuantos puntos sumaran ambos equipos, en futuras versiones podemos 
+buscar cual sera el acierto de un jugador en especifico o los puntos por cuarto que 
+anote cada equipo. 
+Para cumplir nuestro primer objetivo tenemos pocos datos de recientes fechas
+las variables que tenemos de estos datos son: 
+            equipo ganador
+            puntos por partido de cada equipo 
+            numero de puntos que suman ambos equipos 
+            diferencia de puntos 
+            
