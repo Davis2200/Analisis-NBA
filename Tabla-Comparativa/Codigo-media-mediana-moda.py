@@ -47,6 +47,12 @@ mediana = Columnas_importantes['Puntaje de equipo ganador'].median()
 # Calcular la moda
 moda = Columnas_importantes['Puntaje de equipo ganador'].mode().values[0]
 
+# Filtrar los equipos con la moda ganadora
+equipos_moda_ganadora = Tabla_comparativa[Tabla_comparativa['Puntaje de equipo ganador'] == moda]['Equipo ganador'].unique()
+
+# Filtrar los equipos con la moda perdedora
+equipos_moda_perdedora = Tabla_comparativa[Tabla_comparativa['Puntaje de equipo perdedor'] == modaperdedor]['equipo perdedor'].unique()
+
 #df.columns = df.columns.str.strip()  # Elimina espacios al inicio y final de los nombres de las columnas
 
 # Mostrar los resultados
@@ -140,5 +146,7 @@ todos_los_equipos = todos_los_equipos.sort_values(by='Juegos Ganados', ascending
 print(todos_los_equipos)
 
 
-print ('Media {} , moda {} , mediana {} de los equipos ganadores'.format(promedio, moda, mediana))
-print ('Media {} , moda {} , mediana {} de los equipos perdedores'.format(promedioperdedor, modaperdedor, medianaperdedor))
+print ('Media {} , moda {} , mediana {} de los equipos ganadores'.format(promedio, moda, mediana), end=' ')
+print("Equipos con la moda ganadora:", equipos_moda_ganadora)
+print ('Media {} , moda {} , mediana {} de los equipos perdedores'.format(promedioperdedor, modaperdedor, medianaperdedor), end=' ')
+print("Equipos con la moda perdedora:", equipos_moda_perdedora)
