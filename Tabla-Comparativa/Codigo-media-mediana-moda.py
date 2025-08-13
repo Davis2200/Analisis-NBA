@@ -20,7 +20,7 @@ else:
         
 
 
-Tabla_comparativa.columns = Tabla_comparativa.columns.str.strip()  # Elimina espacios al inicio y final de los nombres de las columnas
+Tabla_comparativa.columns.str.strip()  # Elimina espacios al inicio y final de los nombres de las columnas
 
 Tabla_comparativa = Tabla_comparativa.dropna(subset=['Equipo ganador', 'equipo perdedor'])
 #print(df.columns)       

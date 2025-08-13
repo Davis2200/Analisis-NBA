@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mística</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1 class="main-header">
+        <div class="logo">Mística</div>
+    </h1>
+
+    <h2 class="secondary-header">
+        <nav>
+            <ul>
+                <li><a href="#" class="active">NBA</a></li>
+                <li><a href="#" class="disabled">MLB</a></li>
+            </ul>
+        </nav>
+    </h2>
+
+    <main>
+        <section class="partidos-del-dia">
+            <h2>Hoy</h2>
+            <div class="lista-partidos">
+               <!-- Example partidos -->
+            <div class="partido" data-partido="0">  
+                <div class="equipo">
+                    <img src="img/warriors.png" alt="Golden State Warriors">
+                    <div class="nombre-equipo">Warriors</div>
+                </div>
+                <div class="info-partido">
+                    <div>19:00</div>
+                    <div>Chase Center</div>
+                </div>
+                <div class="equipo">
+                    <img src="img/lakers.png" alt="Los Angeles Lakers">
+                    <div class="nombre-equipo">Lakers</div>
+                </div>
+            </div>
+            <div class="partido" data-partido="1">
+                <div class="equipo">
+                    <img src="img/celtics.png" alt="Boston Celtics">
+                    <div class="nombre-equipo">Celtics</div>
+                </div>
+                <div class="info-partido">
+                    <div>21:30</div>
+                    <div>TD Garden</div>
+                </div>
+                <div class="equipo">
+                    <img src="img/bulls.png" alt="Chicago Bulls">
+                    <div class="nombre-equipo">Bulls</div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- Detalle del partido (inicialmente oculto) -->
+        <div id="detalle-partido" style="display:none;">
+            <div style="display: flex; gap: 40px;">
+                <!-- Gráfica de probabilidad -->
+                <div style="flex:1;">
+                    <h3>Probabilidad de Victoria</h3>
+                    <canvas id="grafica-probabilidad" width="200" height="200"></canvas>
+                </div>
+                <!-- Últimos 5 enfrentamientos -->
+                <div style="flex:1;">
+                    <h3>Últimos 5 enfrentamientos</h3>
+                    <ul id="ultimos-enfrentamientos">
+                        <!-- Aquí se llenan los datos por JS -->
+                    </ul>
+                </div>
+            </div>
+            <div style="display: flex; gap: 40px; margin-top: 30px;">
+                <!-- Últimos 5 partidos equipo 1 -->
+                <div style="flex:1;">
+                    <h4 id="nombre-equipo-1">Equipo 1</h4>
+                    <ul id="ultimos-partidos-equipo-1">
+                        <!-- Aquí se llenan los datos por JS -->
+                    </ul>
+                </div>
+                <!-- Últimos 5 partidos equipo 2 -->
+                <div style="flex:1;">
+                    <h4 id="nombre-equipo-2">Equipo 2</h4>
+                    <ul id="ultimos-partidos-equipo-2">
+                        <!-- Aquí se llenan los datos por JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+    <script src="js/main.js"></script>
+</body>
+</html>
