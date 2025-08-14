@@ -53,3 +53,37 @@ AND conrelid = 'player_statistics'::regclass;
 -- Eliminar una clave foránea específica
 ALTER TABLE player_statistics 
 DROP CONSTRAINT player_statistics_team_id_fkey;
+
+
+--obtencion del esquema de la base de datos 
+
+SELECT
+    t.table_schema,
+    t.table_name,
+    c.column_name,
+    c.data_type,
+    c.character_maximum_length,
+    c.is_nullable,
+    tc.constraint_type,
+    kcu2.table_name AS references_table,
+    kcu2.column_name AS references_column
+FROM 
+    information_schema.tables t
+    LEFT JOIN information_schema.columns c 
+        ON t.table_name = c.table_name AND t.table_schema = c.table_schema
+    LEFT JOIN information_schema.key_column_usage kcu 
+        ON c.table_name = kcu.table_name 
+        AND c.column_name = kcu.column_name
+        AND c.table_schema = kcu.table_schema
+    LEFT JOIN information_schema.table_constraints tc 
+        ON kcu.constraint_name = tc.constraint_name
+        AND kcu.table_schema = tc.table_schema
+    LEFT JOIN information_schema.key_column_usage kcu2 
+        ON tc.constraint_name = kcu2.constraint_name
+        AND kcu2.ordinal_position != kcu.ordinal_position
+WHERE 
+    t.table_schema = 'public'
+    AND t.table_type = 'BASE TABLE'
+ORDER BY 
+    t.table_name, 
+    c.ordinal_position;
