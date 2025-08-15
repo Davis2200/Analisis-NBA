@@ -1,19 +1,19 @@
-
-const { Sequelize } = require('sequelize');
+const express = require('express');
 const dotenv = require('dotenv');
+const { sequelize } = require('./models');
+const jugadoresRouter = require('./routers/jugadores');
 
 dotenv.config();
+const app = express();
+app.use(express.json());
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    port: process.env.DB_PORT,
-    logging: false
-  }
-);
+app.use('/jugadores', jugadoresRouter);
 
-module.exports = sequelize;
+sequelize.authenticate()
+  .then(() => {
+    console.log('✅ Conexión DB exitosa');
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`🚀 Servidor en http://localhost:${process.env.PORT || 3000}`);
+    });
+  })
+  .catch(err => console.error('❌ Error DB:', err));
