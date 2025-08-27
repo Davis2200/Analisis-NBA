@@ -2,6 +2,46 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../database'); // Asegúrate de tener tu conexión a PostgreSQL configurada
 
+// Ruta base que lista todos los partidos (paginados)
+router.get('/', async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query;
+        const offset = (page - 1) * limit;
+        
+        const query = `
+            SELECT 
+                gs.game_id,
+                gs.scheduled_date,
+                ht.team_name AS home_team,
+                vt.team_name AS visitor_team,
+                gs.status
+            FROM game_schedule gs
+            JOIN teams ht ON gs.home_team_id = ht.team_id
+            JOIN teams vt ON gs.visitor_team_id = vt.team_id
+            ORDER BY gs.scheduled_date DESC
+            LIMIT $1 OFFSET $2`;
+        
+        const countQuery = `SELECT COUNT(*) FROM game_schedule`;
+        
+        const [{ rows }, { rows: [count] }] = await Promise.all([
+            pool.query(query, [limit, offset]),
+            pool.query(countQuery)
+        ]);
+        
+        res.json({
+            data: rows,
+            pagination: {
+                page: Number(page),
+                limit: Number(limit),
+                total: Number(count.count)
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al obtener partidos' });
+    }
+});
+
 // 1. Partidos para hoy
 router.get('/hoy', async (req, res) => {
     try {

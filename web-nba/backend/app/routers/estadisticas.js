@@ -2,6 +2,37 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../database');
 
+// Ruta raíz - Documentación de endpoints
+router.get('/', (req, res) => {
+  res.json({
+    message: "API de Estadísticas NBA",
+    endpoints: {
+      estadisticas_jugador_partido: "GET /jugador/:player_id/partido/:game_id",
+      tendencia_central: "GET /jugador/:player_id/tendencia-central",
+      evolucion: "GET /jugador/:player_id/evolucion",
+      comparativa: "GET /comparativa?player1=ID&player2=ID"
+    }
+  });
+});
+
+router.get('/buscar/jugador/:nombre', async (req, res) => {
+  try {
+    const { nombre } = req.params;
+    const query = `
+      SELECT p.*, t.team_name 
+      FROM players p
+      JOIN teams t ON p.team_id = t.team_id
+      WHERE LOWER(p.player_name) LIKE LOWER($1)
+      LIMIT 10`;
+    
+    const { rows } = await pool.query(query, [`%${nombre}%`]);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // Estadísticas detalladas de un jugador en un partido específico
 router.get('/jugador/:player_id/partido/:game_id', async (req, res) => {
     try {
